@@ -40,7 +40,7 @@ public class ExpenseService implements IExpenseService {
     public ResponseEntity save(SaveExpenseMO saveExpenseMO) {
         if (!userPredicates.isValidUser(saveExpenseMO.getUserId()))
             return new ResponseEntity<>("User Id Not found", HttpStatus.NOT_FOUND);
-        if (!categoryPredicates.isValidCategory(saveExpenseMO.getCategoryId()))
+        if (!categoryPredicates.doesCategoryExist(saveExpenseMO.getCategoryId()))
             return new ResponseEntity<>("Category Id not found", HttpStatus.NOT_FOUND);
         Expense savedExpense = new ExpenseTransformer().transform(saveExpenseMO);
         expenseRepo.save(savedExpense);
@@ -52,7 +52,7 @@ public class ExpenseService implements IExpenseService {
         final Predicate<Expense> saveExpenseMOCategoryPredicate = expense -> expense.getCategoryId() != null;
         final Predicate<Expense> saveExpenseMOUserPredicate = expense -> expense.getUserId() != null;
         final Predicate<Expense> validUserPredicate = expense -> userPredicates.isValidUser(expense.getUserId());
-        final Predicate<Expense> validCategoryPredicate = expense -> categoryPredicates.isValidCategory(expense.getCategoryId());
+        final Predicate<Expense> validCategoryPredicate = expense -> categoryPredicates.doesCategoryExist(expense.getCategoryId());
         final List<Expense> validExpenseList = saveExpenseMOS.stream()
                 .map(new ExpenseTransformer()::transform)
                 .filter(validUserPredicate)

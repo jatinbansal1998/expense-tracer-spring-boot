@@ -1,5 +1,6 @@
 package com.jatin.ExpenseTracker.model;
 
+import com.jatin.ExpenseTracker.JPADataTypeConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,13 +20,13 @@ public class Category extends BaseEntity {
     @Column(name = "CATEGORY_NAME")
     private String name;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    private User user;
+    @Column(name = "USER_ID", columnDefinition = JPADataTypeConstants.ID)
+    private Long userId;
 
 //    @Column(name = "USER_ID", columnDefinition = JPADataTypeConstants.ID)
 //    private Long userId;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     private List<Expense> expense;
 }

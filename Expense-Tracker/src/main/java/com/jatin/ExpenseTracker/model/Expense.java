@@ -1,10 +1,14 @@
 package com.jatin.ExpenseTracker.model;
 
+import com.jatin.ExpenseTracker.JPADataTypeConstants;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 import java.time.Instant;
 
 @Entity
@@ -26,9 +30,9 @@ public class Expense extends BaseEntity {
     @Column(name = "EXPENSE_LOCATION")
     private String location;
 
-    @ManyToOne
-    private Category category;
+    @Column(name = "CATEGORY_ID", columnDefinition = JPADataTypeConstants.ID)
+    private Long categoryId;
 
-    @ManyToOne
-    private User user;
+    @Column(name = "USER_ID", columnDefinition = JPADataTypeConstants.ID)
+    private Long userId;
 }

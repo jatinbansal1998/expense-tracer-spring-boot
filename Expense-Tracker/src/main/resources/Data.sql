@@ -28,9 +28,9 @@ insert into category
 values (category_seq.nextval, 'Food', 3);
 
 
-insert into expense
+insert into expense (ID, EXPENSE_DESC, EXPENSE_INSTANT, EXPENSE_LOCATION, CATEGORY_ID, USER_ID)
 values (expense_seq.nextval, 'New York Business Trip', '2019-06-16T17:00:00.000Z', 'New York', 1, 1);
-insert into expense
+insert into expense (ID, EXPENSE_DESC, EXPENSE_INSTANT, EXPENSE_LOCATION, CATEGORY_ID, USER_ID)
 values (expense_seq.nextval, 'Ford Mustang Payment', '2019-06-15T15:00:00.000Z', 'LA, CA', 2, 2);
-insert into expense
+insert into expense (ID, EXPENSE_DESC, EXPENSE_INSTANT, EXPENSE_LOCATION, CATEGORY_ID, USER_ID)
 values (expense_seq.nextval, 'Grand Canyon Trip With Family', '2019-06-15T15:00:00.000Z', 'Grand Canyon', 3, 1);

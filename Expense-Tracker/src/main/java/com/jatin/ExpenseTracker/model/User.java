@@ -23,10 +23,10 @@ public class User extends BaseEntity {
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     private List<Category> categories;
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID", insertable = false, updatable = false)
     private List<Expense> expenses;
 }

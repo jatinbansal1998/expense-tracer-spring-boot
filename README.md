@@ -1,1 +1,1 @@
-# expense-tracer-spring-boot
+# expense-tracker-spring-boot

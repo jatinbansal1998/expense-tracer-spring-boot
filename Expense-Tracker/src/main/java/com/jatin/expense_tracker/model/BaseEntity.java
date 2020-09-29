@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 
 @MappedSuperclass
 
@@ -20,6 +21,19 @@ public class BaseEntity implements Serializable {
     @Column(name = "ID", columnDefinition = JPADataTypeConstants.ID)
     private Long id;
 
-//    @Column(name = "CREATION_OR_LAST_UPDATED_TIME")
-//    private LocalDateTime creationTime = LocalDateTime.now();
+    @Column(name = "CREATION_INSTANT")
+    private Instant created;
+
+    @Column(name = "LAST_UPDATE_INSTANT")
+    private Instant updated;
+
+    @PrePersist
+    protected void onCreate() {
+        created = Instant.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        updated = Instant.now();
+    }
 }

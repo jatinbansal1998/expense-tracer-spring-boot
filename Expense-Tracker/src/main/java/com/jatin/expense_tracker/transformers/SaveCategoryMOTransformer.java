@@ -1,16 +1,15 @@
-package com.jatin.expense_tracker.Transformers;
+package com.jatin.expense_tracker.transformers;
 
-import com.jatin.expense_tracker.MO.SaveCategoryMO;
+import com.jatin.expense_tracker.mo.SaveCategoryMO;
 import com.jatin.expense_tracker.model.Category;
 import org.apache.commons.collections4.Transformer;
 
 public class SaveCategoryMOTransformer implements Transformer<Category, SaveCategoryMO> {
     @Override
     public SaveCategoryMO transform(Category category) {
-        SaveCategoryMO saveCategoryMO = SaveCategoryMO.builder()
+        return SaveCategoryMO.builder()
                 .id(category.getId())
                 .name(category.getName())
                 .userId(category.getUserId()).build();
-        return saveCategoryMO;
     }
 }

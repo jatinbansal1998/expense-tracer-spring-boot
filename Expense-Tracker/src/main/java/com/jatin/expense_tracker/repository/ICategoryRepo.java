@@ -10,6 +10,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface ICategoryRepo extends JpaRepository<Category, Long> {
-    @Query(value = "SELECT * FROM CATEGORY c WHERE c.USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM CATEGORY_TABLE c WHERE c.USER_ID = :userId", nativeQuery = true)
     List<Category> findAllByUser(@Param("userId") Long userId);
 }

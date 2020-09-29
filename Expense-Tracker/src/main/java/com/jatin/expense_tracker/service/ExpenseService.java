@@ -1,14 +1,14 @@
-package com.jatin.expense_tracker.Service;
+package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.MO.SaveExpenseMO;
-import com.jatin.expense_tracker.Predicates.CategoryPredicates;
-import com.jatin.expense_tracker.Predicates.UserPredicates;
-import com.jatin.expense_tracker.Transformers.ExpenseTransformer;
-import com.jatin.expense_tracker.Transformers.SaveExpenseTransformer;
+import com.jatin.expense_tracker.mo.SaveExpenseMO;
 import com.jatin.expense_tracker.model.Expense;
+import com.jatin.expense_tracker.predicates.CategoryPredicates;
+import com.jatin.expense_tracker.predicates.UserPredicates;
 import com.jatin.expense_tracker.repository.ICategoryRepo;
 import com.jatin.expense_tracker.repository.IExpenseRepo;
 import com.jatin.expense_tracker.repository.IUserRepo;
+import com.jatin.expense_tracker.transformers.ExpenseTransformer;
+import com.jatin.expense_tracker.transformers.SaveExpenseTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +42,11 @@ public class ExpenseService implements IExpenseService {
             return new ResponseEntity<>("User Id Not found", HttpStatus.NOT_FOUND);
         if (!categoryPredicates.doesCategoryExist(saveExpenseMO.getCategoryId()))
             return new ResponseEntity<>("Category Id not found", HttpStatus.NOT_FOUND);
+        if (!categoryPredicates.doesCategoryBelongToUser(saveExpenseMO.getUserId(), saveExpenseMO.getCategoryId()))
+            return new ResponseEntity<>("Category does not belong to the user", HttpStatus.NOT_ACCEPTABLE);
         Expense savedExpense = new ExpenseTransformer().transform(saveExpenseMO);
         expenseRepo.save(savedExpense);
-        return new ResponseEntity(savedExpense.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(savedExpense.getId(), HttpStatus.CREATED);
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
@@ -53,14 +55,16 @@ public class ExpenseService implements IExpenseService {
         final Predicate<Expense> saveExpenseMOUserPredicate = expense -> expense.getUserId() != null;
         final Predicate<Expense> validUserPredicate = expense -> userPredicates.isValidUser(expense.getUserId());
         final Predicate<Expense> validCategoryPredicate = expense -> categoryPredicates.doesCategoryExist(expense.getCategoryId());
+        final Predicate<Expense> categoryBelongsToGivenUser = expense -> categoryPredicates.doesCategoryBelongToUser(expense.getUserId(), expense.getCategoryId());
         final List<Expense> validExpenseList = saveExpenseMOS.stream()
                 .map(new ExpenseTransformer()::transform)
                 .filter(validUserPredicate)
                 .filter(validCategoryPredicate)
                 .filter(saveExpenseMOUserPredicate)
                 .filter(saveExpenseMOCategoryPredicate)
+                .filter(categoryBelongsToGivenUser)
                 .collect(Collectors.toList());
-        return new ResponseEntity(expenseRepo.saveAll(validExpenseList), HttpStatus.OK);
+        return new ResponseEntity<>(expenseRepo.saveAll(validExpenseList), HttpStatus.OK);
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)

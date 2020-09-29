@@ -1,6 +1,6 @@
-package com.jatin.expense_tracker.Service;
+package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.MO.SaveExpenseMO;
+import com.jatin.expense_tracker.mo.SaveExpenseMO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;

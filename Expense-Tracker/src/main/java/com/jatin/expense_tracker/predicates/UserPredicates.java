@@ -1,4 +1,4 @@
-package com.jatin.expense_tracker.Predicates;
+package com.jatin.expense_tracker.predicates;
 
 import com.jatin.expense_tracker.model.User;
 import com.jatin.expense_tracker.repository.IUserRepo;

@@ -1,6 +1,6 @@
-package com.jatin.expense_tracker.Service;
+package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.MO.SaveCategoryMO;
+import com.jatin.expense_tracker.mo.SaveCategoryMO;
 import org.springframework.http.ResponseEntity;
 
 public interface ICategoryService {

@@ -1,13 +1,13 @@
-package com.jatin.expense_tracker.Service;
+package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.MO.SaveCategoryMO;
-import com.jatin.expense_tracker.Predicates.CategoryPredicates;
-import com.jatin.expense_tracker.Predicates.UserPredicates;
-import com.jatin.expense_tracker.Transformers.CategoryTransformer;
-import com.jatin.expense_tracker.Transformers.SaveCategoryMOTransformer;
+import com.jatin.expense_tracker.mo.SaveCategoryMO;
 import com.jatin.expense_tracker.model.Category;
+import com.jatin.expense_tracker.predicates.CategoryPredicates;
+import com.jatin.expense_tracker.predicates.UserPredicates;
 import com.jatin.expense_tracker.repository.ICategoryRepo;
 import com.jatin.expense_tracker.repository.IUserRepo;
+import com.jatin.expense_tracker.transformers.CategoryTransformer;
+import com.jatin.expense_tracker.transformers.SaveCategoryMOTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

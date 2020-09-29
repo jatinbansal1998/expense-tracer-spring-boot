@@ -1,7 +1,7 @@
 package com.jatin.expense_tracker.controller;
 
-import com.jatin.expense_tracker.MO.SaveExpenseMO;
-import com.jatin.expense_tracker.Service.IExpenseService;
+import com.jatin.expense_tracker.mo.SaveExpenseMO;
+import com.jatin.expense_tracker.service.IExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

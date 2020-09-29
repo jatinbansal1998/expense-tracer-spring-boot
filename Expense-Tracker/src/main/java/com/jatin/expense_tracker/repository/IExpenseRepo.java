@@ -10,6 +10,6 @@ import java.util.List;
 
 @RepositoryRestResource
 public interface IExpenseRepo extends JpaRepository<Expense, Long> {
-    @Query(value = "SELECT * FROM EXPENSE e WHERE e.USER_ID = :userId", nativeQuery = true)
+    @Query(value = "SELECT * FROM EXPENSE_TABLE e WHERE e.USER_ID = :userId", nativeQuery = true)
     List<Expense> findAllByUser(@Param("userId") Long userId);
 }

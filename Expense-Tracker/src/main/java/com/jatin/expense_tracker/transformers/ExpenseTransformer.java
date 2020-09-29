@@ -1,6 +1,6 @@
-package com.jatin.expense_tracker.Transformers;
+package com.jatin.expense_tracker.transformers;
 
-import com.jatin.expense_tracker.MO.SaveExpenseMO;
+import com.jatin.expense_tracker.mo.SaveExpenseMO;
 import com.jatin.expense_tracker.model.Expense;
 import org.apache.commons.collections4.Transformer;
 

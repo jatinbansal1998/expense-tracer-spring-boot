@@ -1,7 +1,7 @@
 package com.jatin.expense_tracker.controller;
 
-import com.jatin.expense_tracker.MO.SaveCategoryMO;
-import com.jatin.expense_tracker.Service.ICategoryService;
+import com.jatin.expense_tracker.mo.SaveCategoryMO;
+import com.jatin.expense_tracker.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;

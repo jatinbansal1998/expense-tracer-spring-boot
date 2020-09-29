@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.controller;
 
-import com.jatin.expense_tracker.mo.SaveCategoryMO;
+import com.jatin.expense_tracker.mo.input.CategoryInputMO;
 import com.jatin.expense_tracker.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +21,7 @@ public class CategoryController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity save(@RequestBody SaveCategoryMO saveCategoryMO) {
-        return categoryService.save(saveCategoryMO);
+    public ResponseEntity save(@RequestBody CategoryInputMO categoryInputMO) {
+        return categoryService.save(categoryInputMO);
     }
 }

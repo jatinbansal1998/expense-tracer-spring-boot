@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.mo.SaveCategoryMO;
+import com.jatin.expense_tracker.mo.input.CategoryInputMO;
 import com.jatin.expense_tracker.model.Category;
 import com.jatin.expense_tracker.predicates.CategoryPredicates;
 import com.jatin.expense_tracker.predicates.UserPredicates;
@@ -30,10 +30,10 @@ public class CategoryService implements ICategoryService {
     CategoryPredicates categoryPredicates;
 
     @Override
-    public ResponseEntity save(SaveCategoryMO saveCategoryMO) {
-        if (!userPredicates.isValidUser(saveCategoryMO.getUserId()))
+    public ResponseEntity save(CategoryInputMO categoryInputMO) {
+        if (!userPredicates.isValidUser(categoryInputMO.getUserId()))
             return new ResponseEntity<>("User Id Not found", HttpStatus.NOT_FOUND);
-        Category saveCategory = new CategoryTransformer().transform(saveCategoryMO);
+        Category saveCategory = new CategoryTransformer().transform(categoryInputMO);
         categoryRepo.save(saveCategory);
         return new ResponseEntity(saveCategory.getId(), HttpStatus.CREATED);
     }

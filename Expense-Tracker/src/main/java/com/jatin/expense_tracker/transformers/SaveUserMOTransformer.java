@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.transformers;
 
-import com.jatin.expense_tracker.mo.SaveUserMO;
+import com.jatin.expense_tracker.mo.output.SaveUserMO;
 import com.jatin.expense_tracker.model.User;
 import org.apache.commons.collections4.Transformer;
 

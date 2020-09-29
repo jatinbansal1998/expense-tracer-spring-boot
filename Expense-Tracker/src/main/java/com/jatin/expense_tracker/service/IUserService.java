@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.mo.SaveUserMO;
+import com.jatin.expense_tracker.mo.input.UserInputMO;
 import org.springframework.http.ResponseEntity;
 
 public interface IUserService {
@@ -8,5 +8,5 @@ public interface IUserService {
 
     ResponseEntity getUserById(Long userId);
 
-    ResponseEntity save(SaveUserMO saveUserMO);
+    ResponseEntity save(UserInputMO saveUserMO);
 }

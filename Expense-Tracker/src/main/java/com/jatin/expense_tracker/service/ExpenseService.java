@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.mo.SaveExpenseMO;
+import com.jatin.expense_tracker.mo.input.ExpenseInputMO;
 import com.jatin.expense_tracker.model.Expense;
 import com.jatin.expense_tracker.predicates.CategoryPredicates;
 import com.jatin.expense_tracker.predicates.UserPredicates;
@@ -37,26 +37,26 @@ public class ExpenseService implements IExpenseService {
     CategoryPredicates categoryPredicates;
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public ResponseEntity save(SaveExpenseMO saveExpenseMO) {
-        if (!userPredicates.isValidUser(saveExpenseMO.getUserId()))
+    public ResponseEntity save(ExpenseInputMO expenseInputMO) {
+        if (!userPredicates.isValidUser(expenseInputMO.getUserId()))
             return new ResponseEntity<>("User Id Not found", HttpStatus.NOT_FOUND);
-        if (!categoryPredicates.doesCategoryExist(saveExpenseMO.getCategoryId()))
+        if (!categoryPredicates.doesCategoryExist(expenseInputMO.getCategoryId()))
             return new ResponseEntity<>("Category Id not found", HttpStatus.NOT_FOUND);
-        if (!categoryPredicates.doesCategoryBelongToUser(saveExpenseMO.getUserId(), saveExpenseMO.getCategoryId()))
+        if (!categoryPredicates.doesCategoryBelongToUser(expenseInputMO.getUserId(), expenseInputMO.getCategoryId()))
             return new ResponseEntity<>("Category does not belong to the user", HttpStatus.NOT_ACCEPTABLE);
-        Expense savedExpense = new ExpenseTransformer().transform(saveExpenseMO);
+        Expense savedExpense = new ExpenseTransformer().transform(expenseInputMO);
         expenseRepo.save(savedExpense);
         return new ResponseEntity<>(savedExpense.getId(), HttpStatus.CREATED);
     }
 
     @Transactional(Transactional.TxType.REQUIRES_NEW)
-    public ResponseEntity addMultipleExpenses(List<SaveExpenseMO> saveExpenseMOS) {
+    public ResponseEntity addMultipleExpenses(List<ExpenseInputMO> expenseInputMOS) {
         final Predicate<Expense> saveExpenseMOCategoryPredicate = expense -> expense.getCategoryId() != null;
         final Predicate<Expense> saveExpenseMOUserPredicate = expense -> expense.getUserId() != null;
         final Predicate<Expense> validUserPredicate = expense -> userPredicates.isValidUser(expense.getUserId());
         final Predicate<Expense> validCategoryPredicate = expense -> categoryPredicates.doesCategoryExist(expense.getCategoryId());
         final Predicate<Expense> categoryBelongsToGivenUser = expense -> categoryPredicates.doesCategoryBelongToUser(expense.getUserId(), expense.getCategoryId());
-        final List<Expense> validExpenseList = saveExpenseMOS.stream()
+        final List<Expense> validExpenseList = expenseInputMOS.stream()
                 .map(new ExpenseTransformer()::transform)
                 .filter(validUserPredicate)
                 .filter(validCategoryPredicate)

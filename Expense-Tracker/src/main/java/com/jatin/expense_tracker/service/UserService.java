@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.mo.SaveUserMO;
+import com.jatin.expense_tracker.mo.input.UserInputMO;
 import com.jatin.expense_tracker.model.User;
 import com.jatin.expense_tracker.repository.IUserRepo;
 import com.jatin.expense_tracker.transformers.SaveUserMOTransformer;
@@ -34,8 +34,8 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public ResponseEntity save(SaveUserMO saveUserMO) {
-        User user = new UserTransformer().transform(saveUserMO);
+    public ResponseEntity save(UserInputMO userInputMO) {
+        User user = new UserTransformer().transform(userInputMO);
         userRepo.save(user);
         return new ResponseEntity(user.getId(), HttpStatus.CREATED);
     }

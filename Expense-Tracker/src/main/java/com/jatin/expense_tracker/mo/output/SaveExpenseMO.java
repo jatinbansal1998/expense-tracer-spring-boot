@@ -1,4 +1,4 @@
-package com.jatin.expense_tracker.mo;
+package com.jatin.expense_tracker.mo.output;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

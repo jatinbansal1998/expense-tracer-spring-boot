@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.transformers;
 
-import com.jatin.expense_tracker.mo.SaveCategoryMO;
+import com.jatin.expense_tracker.mo.output.SaveCategoryMO;
 import com.jatin.expense_tracker.model.Category;
 import org.apache.commons.collections4.Transformer;
 

@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.controller;
 
-import com.jatin.expense_tracker.mo.SaveExpenseMO;
+import com.jatin.expense_tracker.mo.input.ExpenseInputMO;
 import com.jatin.expense_tracker.service.IExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,8 +19,8 @@ public class ExpenseController {
     IExpenseService expenseService;
 
     @PostMapping(value = "/addMultipleExpenses")
-    public ResponseEntity addMultipleExpenses(@RequestBody List<SaveExpenseMO> saveExpenseMOS) {
-        return expenseService.addMultipleExpenses(saveExpenseMOS);
+    public ResponseEntity addMultipleExpenses(@RequestBody List<ExpenseInputMO> expenseInputMOS) {
+        return expenseService.addMultipleExpenses(expenseInputMOS);
     }
 
     @GetMapping(value = "/getAllExpenses")
@@ -29,8 +29,8 @@ public class ExpenseController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity save(@RequestBody SaveExpenseMO saveExpenseMO) {
-        return expenseService.save(saveExpenseMO);
+    public ResponseEntity save(@RequestBody ExpenseInputMO expenseInputMO) {
+        return expenseService.save(expenseInputMO);
     }
 
     @GetMapping("/hello")

@@ -1,6 +1,6 @@
 package com.jatin.expense_tracker.controller;
 
-import com.jatin.expense_tracker.mo.SaveUserMO;
+import com.jatin.expense_tracker.mo.input.UserInputMO;
 import com.jatin.expense_tracker.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/save")
-    public ResponseEntity save(@RequestBody SaveUserMO saveUserMO) {
-        return userService.save(saveUserMO);
+    public ResponseEntity save(@RequestBody UserInputMO userInputMO) {
+        return userService.save(userInputMO);
     }
 }

@@ -1,14 +1,14 @@
 package com.jatin.expense_tracker.service;
 
-import com.jatin.expense_tracker.mo.SaveExpenseMO;
+import com.jatin.expense_tracker.mo.input.ExpenseInputMO;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface IExpenseService {
-    ResponseEntity save(SaveExpenseMO saveExpenseMO);
+    ResponseEntity save(ExpenseInputMO saveExpenseMO);
 
-    ResponseEntity addMultipleExpenses(List<SaveExpenseMO> saveExpenseMOS);
+    ResponseEntity addMultipleExpenses(List<ExpenseInputMO> saveExpenseMOS);
 
     ResponseEntity getAllExpenses(Long userId);
 }

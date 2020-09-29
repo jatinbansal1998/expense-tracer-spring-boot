@@ -1,18 +1,18 @@
 package com.jatin.expense_tracker.transformers;
 
-import com.jatin.expense_tracker.mo.SaveExpenseMO;
+import com.jatin.expense_tracker.mo.input.ExpenseInputMO;
 import com.jatin.expense_tracker.model.Expense;
 import org.apache.commons.collections4.Transformer;
 
-public class ExpenseTransformer implements Transformer<SaveExpenseMO, Expense> {
+public class ExpenseTransformer implements Transformer<ExpenseInputMO, Expense> {
     @Override
-    public Expense transform(SaveExpenseMO saveExpenseMO) {
+    public Expense transform(ExpenseInputMO expenseInputMO) {
         Expense expense = new Expense();
-        expense.setLocation(saveExpenseMO.getLocation());
-        expense.setDescription(saveExpenseMO.getDescription());
-        expense.setExpenseInstant(saveExpenseMO.getExpenseInstant());
-        expense.setUserId(saveExpenseMO.getUserId());
-        expense.setCategoryId(saveExpenseMO.getCategoryId());
+        expense.setLocation(expenseInputMO.getLocation());
+        expense.setDescription(expenseInputMO.getDescription());
+        expense.setExpenseInstant(expenseInputMO.getExpenseInstant());
+        expense.setUserId(expenseInputMO.getUserId());
+        expense.setCategoryId(expenseInputMO.getCategoryId());
         return expense;
     }
 }

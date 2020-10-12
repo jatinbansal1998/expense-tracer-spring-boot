@@ -1,13 +1,13 @@
 package com.jatin.expense_tracker.transformers;
 
-import com.jatin.expense_tracker.mo.output.SaveUserMO;
 import com.jatin.expense_tracker.model.User;
+import com.jatin.expense_tracker.response.vo.UserResponseEntity;
 import org.apache.commons.collections4.Transformer;
 
-public class SaveUserMOTransformer implements Transformer<User, SaveUserMO> {
+public class UserResponseEntityTransformer implements Transformer<User, UserResponseEntity> {
     @Override
-    public SaveUserMO transform(User user) {
-        return SaveUserMO.builder()
+    public UserResponseEntity transform(User user) {
+        return UserResponseEntity.builder()
                 .email(user.getEmail())
                 .name(user.getName())
                 .id(user.getId())

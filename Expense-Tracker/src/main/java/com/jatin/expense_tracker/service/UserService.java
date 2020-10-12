@@ -3,7 +3,8 @@ package com.jatin.expense_tracker.service;
 import com.jatin.expense_tracker.mo.input.UserInputMO;
 import com.jatin.expense_tracker.model.User;
 import com.jatin.expense_tracker.repository.IUserRepo;
-import com.jatin.expense_tracker.transformers.SaveUserMOTransformer;
+import com.jatin.expense_tracker.response.vo.ErrorResponseEntity;
+import com.jatin.expense_tracker.transformers.UserResponseEntityTransformer;
 import com.jatin.expense_tracker.transformers.UserTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class UserService implements IUserService {
 
     @Override
     public ResponseEntity getAllUsers() {
-        return new ResponseEntity<>(userRepo.findAll().stream().map(new SaveUserMOTransformer()::transform).collect(Collectors.toList()), HttpStatus.OK);
+        return new ResponseEntity<>(userRepo.findAll().stream().map(new UserResponseEntityTransformer()::transform).collect(Collectors.toList()), HttpStatus.OK);
     }
 
     @Override
@@ -28,8 +29,8 @@ public class UserService implements IUserService {
         Optional<User> optionalUser = userRepo.findById(userId);
         ResponseEntity responseEntity;
         if (optionalUser.isPresent())
-            responseEntity = new ResponseEntity<>(new SaveUserMOTransformer().transform(optionalUser.get()), HttpStatus.OK);
-        else responseEntity = new ResponseEntity<>("User ID not found", HttpStatus.NOT_FOUND);
+            responseEntity = new ResponseEntity<>(new UserResponseEntityTransformer().transform(optionalUser.get()), HttpStatus.OK);
+        else responseEntity = new ResponseEntity<>(new ErrorResponseEntity("User ID not found"), HttpStatus.NOT_FOUND);
         return responseEntity;
     }
 

@@ -7,8 +7,9 @@ import com.jatin.expense_tracker.predicates.UserPredicates;
 import com.jatin.expense_tracker.repository.ICategoryRepo;
 import com.jatin.expense_tracker.repository.IExpenseRepo;
 import com.jatin.expense_tracker.repository.IUserRepo;
+import com.jatin.expense_tracker.response.vo.ErrorResponseEntity;
+import com.jatin.expense_tracker.transformers.ExpenseResponseEntityTransformer;
 import com.jatin.expense_tracker.transformers.ExpenseTransformer;
-import com.jatin.expense_tracker.transformers.SaveExpenseTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,11 +40,11 @@ public class ExpenseService implements IExpenseService {
     @Transactional(Transactional.TxType.REQUIRES_NEW)
     public ResponseEntity save(ExpenseInputMO expenseInputMO) {
         if (!userPredicates.isValidUser(expenseInputMO.getUserId()))
-            return new ResponseEntity<>("User Id Not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponseEntity("User Id Not found"), HttpStatus.NOT_FOUND);
         if (!categoryPredicates.doesCategoryExist(expenseInputMO.getCategoryId()))
-            return new ResponseEntity<>("Category Id not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponseEntity("Category Id not found"), HttpStatus.NOT_FOUND);
         if (!categoryPredicates.doesCategoryBelongToUser(expenseInputMO.getUserId(), expenseInputMO.getCategoryId()))
-            return new ResponseEntity<>("Category does not belong to the user", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(new ErrorResponseEntity("Category does not belong to the user"), HttpStatus.NOT_ACCEPTABLE);
         Expense savedExpense = new ExpenseTransformer().transform(expenseInputMO);
         expenseRepo.save(savedExpense);
         return new ResponseEntity<>(savedExpense.getId(), HttpStatus.CREATED);
@@ -73,10 +74,11 @@ public class ExpenseService implements IExpenseService {
         if (userPredicates.isValidUser(userId)) {
             responseEntity = new ResponseEntity(
                     expenseRepo.findAllByUser(userId).stream()
-                            .map(new SaveExpenseTransformer()::transform)
+                            .map(new ExpenseResponseEntityTransformer()::transform)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
-        } else responseEntity = new ResponseEntity<>("User Id not found", HttpStatus.NOT_FOUND);
+        } else
+            responseEntity = new ResponseEntity<>(new ErrorResponseEntity("User Id not found"), HttpStatus.NOT_FOUND);
         return responseEntity;
     }
 }

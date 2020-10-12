@@ -1,17 +1,15 @@
-package com.jatin.expense_tracker.mo.output;
+package com.jatin.expense_tracker.response.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class SaveUserMO implements Serializable {
+public class UserResponseEntity extends BaseResponseEntity {
     private static final long serialVersionUID = 2456026734266670772L;
     private Long id;
     private String name;

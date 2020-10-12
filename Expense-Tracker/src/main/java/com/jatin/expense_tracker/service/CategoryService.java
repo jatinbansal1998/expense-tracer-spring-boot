@@ -6,8 +6,9 @@ import com.jatin.expense_tracker.predicates.CategoryPredicates;
 import com.jatin.expense_tracker.predicates.UserPredicates;
 import com.jatin.expense_tracker.repository.ICategoryRepo;
 import com.jatin.expense_tracker.repository.IUserRepo;
+import com.jatin.expense_tracker.response.vo.ErrorResponseEntity;
+import com.jatin.expense_tracker.transformers.CategoryResponseEntityTransformer;
 import com.jatin.expense_tracker.transformers.CategoryTransformer;
-import com.jatin.expense_tracker.transformers.SaveCategoryMOTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,22 +33,23 @@ public class CategoryService implements ICategoryService {
     @Override
     public ResponseEntity save(CategoryInputMO categoryInputMO) {
         if (!userPredicates.isValidUser(categoryInputMO.getUserId()))
-            return new ResponseEntity<>("User Id Not found", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponseEntity("User Id not found"), HttpStatus.NOT_FOUND);
         Category saveCategory = new CategoryTransformer().transform(categoryInputMO);
         categoryRepo.save(saveCategory);
-        return new ResponseEntity(saveCategory.getId(), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CategoryResponseEntityTransformer().transform(saveCategory), HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity getAllCategories(Long userId) {
         ResponseEntity responseEntity;
         if (userPredicates.isValidUser(userId)) {
-            responseEntity = new ResponseEntity(
+            responseEntity = new ResponseEntity<>(
                     categoryRepo.findAllByUser(userId).stream()
-                            .map(new SaveCategoryMOTransformer()::transform)
+                            .map(new CategoryResponseEntityTransformer()::transform)
                             .collect(Collectors.toList())
                     , HttpStatus.OK);
-        } else responseEntity = new ResponseEntity<>("User Id not found", HttpStatus.NOT_FOUND);
+        } else
+            responseEntity = new ResponseEntity<>(new ErrorResponseEntity("User Id not found"), HttpStatus.NOT_FOUND);
         return responseEntity;
     }
 }
